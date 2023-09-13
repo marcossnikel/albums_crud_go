@@ -68,3 +68,17 @@ func deleteAlbumById(c *gin.Context){
 
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
 }
+
+func updateAlbumById(c *gin.Context){
+	id := c.Param("id")
+
+	for i, a := range albums {
+		if a.ID == id {
+			albums = append(albums[:i], albums[i+1:]...)
+			c.IndentedJSON(http.StatusOK, a)
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+}
